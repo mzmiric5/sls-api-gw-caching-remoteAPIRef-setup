@@ -1,0 +1,36 @@
+service:
+  name: caching-error-repro-api-gw
+
+custom:
+  defaultStage: dev
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-west-2
+  stage: ${opt:stage, self:custom.defaultStage}
+
+resources:
+  Resources:
+    reproApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Description: Repro API (${self:provider.stage})
+        FailOnWarnings: true
+        Name: ReproAGW-${self:provider.stage}
+  Outputs:
+    ApiGatewayRestApiId:
+      Value:
+        Ref: reproApiGatewayRestApi
+      Export:
+        Name: reproApiGatewayRestApiId-${self:provider.stage}
+    ApiGatewayRestApiRootResourceId:
+      Value:
+         Fn::GetAtt:
+          - reproApiGatewayRestApi
+          - RootResourceId
+      Export:
+        Name: reproApiGatewayRestApiRootResourceId-${self:provider.stage}

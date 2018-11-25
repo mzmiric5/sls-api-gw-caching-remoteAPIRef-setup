@@ -1,0 +1,8 @@
+{
+  "name": "caching-error-repro-hello",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "serverless-api-gateway-caching": "https://github.com/doubly/serverless-api-gateway-caching.git#skip-restapi-check"
+  }
+}
